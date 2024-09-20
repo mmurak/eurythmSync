@@ -286,7 +286,7 @@ G.jumpSelector.addEventListener("change", (evt) => {
 G.zoomIn.addEventListener("click", (evt) => { processZoomIn(evt); });
 function processZoomIn(evt) {
 	G.zoomOut.disabled = false;
-	if (evt.shiftKey) {
+	if (evt.ctrlKey) {
 		G.currentZoomFactor = G.storedZoomFactor;
 	} else {
 		G.currentZoomFactor += G.zoomDelta;
@@ -298,7 +298,7 @@ function processZoomIn(evt) {
 G.zoomOut.addEventListener("click", (evt) => { processZoomOut(evt); });
 function processZoomOut(evt) {
 	if (G.currentZoomFactor > G.minimumZoomFactor) {
-		if (evt.shiftKey) {
+		if (evt.ctrlKey) {
 			G.storedZoomFactor = G.currentZoomFactor;
 			G.currentZoomFactor = G.minimumZoomFactor;
 		} else {
