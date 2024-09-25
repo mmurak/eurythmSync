@@ -96,7 +96,8 @@ G.inputFile.addEventListener("change", (e) => {
 			progressColor: '#87CEBB',
 			readyCallback: 	readyCB,
 			playCallback: playCB,
-			pauseCallback: pauseCB
+			pauseCallback: pauseCB,
+			height: 100,
 		});
 		const url = URL.createObjectURL(file);
 		G.flexPlayer.wavesurfer.on("timeupdate", (time) => {
@@ -272,11 +273,21 @@ document.addEventListener("keydown", (evt) => {
 		_changePlaySpeed();
 	} else if ((evt.key == "d") || (evt.key == "D")) {
 		resetPlaySpeed();
+	} else if ((evt.key == "p") || (evt.key == "P")) {
+		resetPlayPitch();
 	} else if ((evt.key == "i") || (evt.key == "I")) {
 		processZoomIn(evt);
 	} else if ((evt.key == "o") || (evt.key == "O")) {
 		processZoomOut(evt);
 	}
+	evt.stopPropagation();
+	evt.preventDefault();
+	return false;
+});
+
+// Double-click disabler
+document.addEventListener("dblclick", (e) => {
+	e.preventDefault();
 });
 
 G.jumpSelector.addEventListener("change", (evt) => {
@@ -325,7 +336,7 @@ createFrameSurfer();
 */
 G.recorderSurfer = new RecorderSurfer({
 	micContainer: "#mic",
-	micHeight: 40,
+	micHeight: 30,
 	micWaveColor: "rgb(255, 0, 0)",
 	micProgressColor: "rgb(255, 0, 0)",
 	progressArea: G.progress,
@@ -392,6 +403,13 @@ G.recButton.addEventListener("mousedown", (evt) => {
 
 G.recButton.addEventListener("mouseup", recordingStop);
 G.recButton.addEventListener("mouseleave", recordingStop);
+
+// Double-click disabler for recording button
+G.recButton.addEventListener("dblclick", (evt) => {
+	setTimeout(recordingStop, 300);
+	evt.preventDefault();
+});
+
 
 function recordingStop() {
 	if (G.inRec && !G.recorderSurfer.isRecording()) {	// dirty patch to remedy timing glitch
@@ -494,6 +512,7 @@ function createModelSurferBody() {
 		readyCallback: 	readyCallback,
 		playCallback: playCallback,
 		pauseCallback: pauseCallback,
+		height: 100,
 	});
 	G.modelSurfer.load(url);
 

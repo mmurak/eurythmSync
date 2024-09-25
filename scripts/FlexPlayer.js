@@ -33,6 +33,7 @@ export class FlexPlayer {
 			container: paramDict.container,
 			waveColor: paramDict.waveColor,
 			progressColor: paramDict.progressColor,
+			height: paramDict.height,
 		});
 
 		this.wavesurfer.on("ready", () => {
